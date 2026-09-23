@@ -1,21 +1,32 @@
 services:
-  mysql:
-    image: mysql:latest
+  postgres:
+    image: postgres:16-alpine
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'db'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
     volumes:
       - ./database_students.sql:/docker-entrypoint-initdb.d/database_students.sql
+      - postgres_data:/var/lib/postgresql/data
     ports:
-      - "3306:3306"
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   pythonapp:
     build: .
     depends_on:
-      - mysql
+      postgres:
+        condition: service_healthy
     ports:
-      - "5000:5000"
+      - "8000:8000"
     volumes:
       - .:/app
     environment:
-      FLASK_ENV: development
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres:5432/db
+
+volumes:
+  postgres_data:

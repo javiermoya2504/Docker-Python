@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>About</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Acerca de{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h1 class="h4">Acerca de este proyecto</h1>
+            <p class="text-muted mb-0">
+                Aplicación de ejemplo construida con FastAPI, SQLAlchemy y PostgreSQL,
+                orquestada con Docker Compose.
+            </p>
+        </div>
+    </div>
+{% endblock %}
