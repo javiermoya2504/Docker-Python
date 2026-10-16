@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: mi_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: database_students
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database_students.sql:/docker-entrypoint-initdb.d/init.sql
+
+  web:
+    build: .
+    container_name: app_flask
+    ports:
+      - "5001:5001"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=database_students
+    depends_on:
+      - db

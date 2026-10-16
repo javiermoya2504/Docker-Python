@@ -9,4 +9,7 @@ CREATE TABLE IF NOT EXISTS students (
 INSERT INTO students (first_name, surname) VALUES
     ('John', 'Andersen'),
     ('Emma', 'Smith'),
-    ('Lot', 'Lotso');
+    ('Lot', 'Lotso'),
+    ('Citlali', 'Luna'),
+    ('Carlos', 'García'),
+    ('María', 'López');
